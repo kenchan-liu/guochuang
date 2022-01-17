@@ -32,6 +32,6 @@ if __name__=="__main__":
             else:
                 dic[item] = 1
         #print(dic)
-    dic = dict(sorted(dic.items(), key = lambda kv:(kv[1], kv[0]),reverse=True))
+    dic = dict(sorted(dic.items(), key = lambda kv:(len(kv[0]),kv[1]),reverse=True))
     with open("F://comm.txt", "w") as f:
         [f.write('{0},{1}\n'.format(key,value)) for key,value in dic.items()]
