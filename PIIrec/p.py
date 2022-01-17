@@ -29,8 +29,9 @@ def write_file(filename,PIIs,passwords):
                 string+=item+","
             string+=passwords[i]
             f.write(string)
-dir="F:\PII Research\Dataset\CiXiHR-PII"
-dataFileName=dir+"\clean_data.csv"
+# dir="F:\PII Research\Dataset\CiXiHR-PII"
+# dataFileName=dir+"\clean_data.csv"
+dataFileName="\clean_data.csv"
 output=dir+"\Recognize_data.csv"
 replaceFileName=dir+"\Replace_word.csv"
 # data=read_file(dataFileName)
@@ -47,13 +48,21 @@ if __name__=="__main__":
     # print(passwords)
     replace_PII=[["Type","replace_PII"]]
     raw_password=["raw_password\n"]
+    format_passwords=[]
     for i,PII in enumerate(PIIs):
+        format_password = [0]*len(passwords[i])
         if i%100000==0:
             print('Recognize %d...\n'%i)
         #Username
         if PII[0].lower() in str(passwords[i]).lower():
             reg = re.compile(re.escape(PII[0]), re.IGNORECASE)
-            temp=reg.sub('#', str(passwords[i]))
+            temp=str(passwords[i])
+            for it in reg.finditer(passwords[i]):
+                start_index=it.start()
+                length=it.group()
+                for index in range(start_index,start_index+length):
+                    format_password[index]='U'
+                temp=reg.sub('#', str(temp))
             PII_usage['username']+=1
             raw_password.append(passwords[i])
             replace_PII.append(['username',PII[0]])
@@ -73,6 +82,14 @@ if __name__=="__main__":
             birthPattern.sort(key=lambda i: len(i), reverse=True)
             # print(birthPattern)
             for pattern in birthPattern:
+                reg = re.compile(re.escape(pattern), re.IGNORECASE)
+                temp=str(passwords[i])
+                for it in reg.finditer(passwords[i]):
+                    start_index = it.start()
+                    length = it.group()
+                    for index in range(start_index, start_index + length):
+                        format_password[index] = 'B'
+                    temp=reg.sub('~', str(temp))
                 if pattern in passwords[i]:
                     PII_usage['birth']+=1
                     raw_password.append(passwords[i])
