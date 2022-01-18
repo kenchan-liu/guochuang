@@ -73,8 +73,6 @@ class Train:
             else: 
                 self.symbols[streamLen] = {}
                 self.symbols[streamLen][symbolStream] = counter
-
-    
     def base_organize(self, mode):
         """Organize the structure of the base (occurences -> probability), modify the probability based on the mode"""
 
