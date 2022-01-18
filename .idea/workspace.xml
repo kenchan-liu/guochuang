@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="690ecd8e-af81-4917-99ce-60a8ee46c550" name="Default Changelist" comment="add main">
+    <list default="true" id="690ecd8e-af81-4917-99ce-60a8ee46c550" name="Default Changelist" comment="add birth_rec">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/p.py" beforeDir="false" afterPath="$PROJECT_DIR$/p.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIIrec/p.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIIrec/p.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,14 +22,36 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CellInsert/main.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.p (1)">
+    <configuration name="p (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="guochuang" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/PIIrec" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/PIIrec/p.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="p" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="guochuang" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -54,6 +76,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.p (1)" />
         <item itemvalue="Python.p" />
       </list>
     </recent_temporary>
@@ -68,6 +91,9 @@
       <updated>1642313299639</updated>
       <workItem from="1642313301853" duration="4175000" />
       <workItem from="1642322833766" duration="2474000" />
+      <workItem from="1642409593207" duration="7870000" />
+      <workItem from="1642424451663" duration="1277000" />
+      <workItem from="1642482470522" duration="391000" />
     </task>
     <task id="LOCAL-00001" summary="add main">
       <created>1642314508856</created>
@@ -76,7 +102,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642314508856</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add birth_rec">
+      <created>1642409662073</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1642409662073</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,9 +129,11 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add main" />
-    <option name="LAST_COMMIT_MESSAGE" value="add main" />
+    <MESSAGE value="add birth_rec" />
+    <option name="LAST_COMMIT_MESSAGE" value="add birth_rec" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/guochuang$p.coverage" NAME="p Coverage Results" MODIFIED="1642325314747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/guochuang$p__1_.coverage" NAME="p (1) Coverage Results" MODIFIED="1642425095082" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PIIrec" />
+    <SUITE FILE_PATH="coverage/guochuang$p.coverage" NAME="p Coverage Results" MODIFIED="1642410982364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

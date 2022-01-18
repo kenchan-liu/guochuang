@@ -4,7 +4,7 @@ import re
 
 
 def file_detect(filename):
-    with open(filename, 'rb') as rawdata:
+    with open(filename, 'r') as rawdata:
         result = chardet.detect(rawdata.read(100000))
     print(result)
 
@@ -12,7 +12,7 @@ def read_file(filename):
     # data=pd.read_csv(filename,header=None)
     PIIs=[]
     passwords=[]
-    with open(filename, "r") as f:
+    with open(filename,'r') as f:
         for line in f.readlines():
             temp = line.split(',')
             if len(temp)>9: #invalid item
@@ -29,10 +29,35 @@ def write_file(filename,PIIs,passwords):
                 string+=item+","
             string+=passwords[i]
             f.write(string)
-# dir="F:\PII Research\Dataset\CiXiHR-PII"
-# dataFileName=dir+"\clean_data.csv"
-dataFileName="\clean_data.csv"
+def getType(char):
+    if char.isdigit():
+        return 'D'
+    if char.isalpha():
+        return 'L'
+    if char=='\n':
+        return 'end'
+    return'S'
+def Trans2PCFG(format_passwords):
+    pcfg_format_passwords=[]
+    for password in format_passwords:
+        pcfg=""
+        lastType=password[0]
+        cnt=1
+        for i in range(1,len(password)):
+            if password[i]==lastType:
+                cnt+=1
+            else:
+                pcfg+=('%s%d'%(lastType,cnt))
+                lastType=password[i]
+                cnt=1
+        pcfg+='\n'
+        pcfg_format_passwords.append(pcfg)
+    return pcfg_format_passwords
+dir="F:\PII Research\Dataset\CiXiHR-PII"
+dataFileName=dir+"\clean_data.csv"
+# dataFileName="\clean_data.csv"
 output=dir+"\Recognize_data.csv"
+pcfg_password_file=dir+'\pcfg_format_password.csv'
 replaceFileName=dir+"\Replace_word.csv"
 # data=read_file(dataFileName)
 # _,_,d=data.value
@@ -46,6 +71,7 @@ if __name__=="__main__":
     size=len(PIIs)
     # print(PIIs)
     # print(passwords)
+    origin_passwords=passwords[:]
     replace_PII=[["Type","replace_PII"]]
     raw_password=["raw_password\n"]
     format_passwords=[]
@@ -59,10 +85,10 @@ if __name__=="__main__":
             temp=str(passwords[i])
             for it in reg.finditer(passwords[i]):
                 start_index=it.start()
-                length=it.group()
+                length=len(it.group())
                 for index in range(start_index,start_index+length):
                     format_password[index]='U'
-                temp=reg.sub('#', str(temp))
+                temp=reg.sub('$', str(temp))
             PII_usage['username']+=1
             raw_password.append(passwords[i])
             replace_PII.append(['username',PII[0]])
@@ -82,32 +108,50 @@ if __name__=="__main__":
             birthPattern.sort(key=lambda i: len(i), reverse=True)
             # print(birthPattern)
             for pattern in birthPattern:
-                reg = re.compile(re.escape(pattern), re.IGNORECASE)
-                temp=str(passwords[i])
-                for it in reg.finditer(passwords[i]):
-                    start_index = it.start()
-                    length = it.group()
-                    for index in range(start_index, start_index + length):
-                        format_password[index] = 'B'
-                    temp=reg.sub('~', str(temp))
                 if pattern in passwords[i]:
+                    reg = re.compile(re.escape(pattern), re.IGNORECASE)
+                    temp=str(passwords[i])
+                    for it in reg.finditer(passwords[i]):
+                        start_index = it.start()
+                        length = len(it.group())
+                        for index in range(start_index, start_index + length):
+                            format_password[index] = 'B'
+                        temp=reg.sub('$', str(temp))
                     PII_usage['birth']+=1
                     raw_password.append(passwords[i])
                     replace_PII.append(['birth', pattern])
-                    passwords[i]=passwords[i].replace(pattern, '~')
+                    passwords[i]=temp
         #Name
         l=str(PII[2]).split(' ')
-        if len(l)>1:
-            if l[1] in str(passwords[i]):
-                PII_usage['name']+=1
-                raw_password.append(passwords[i])
-                replace_PII.append(['Name', PII[2]])
-                passwords[i]=str(passwords[i]).replace(l[1], '&')
+        if len(l)>0:
             if l[0] in str(passwords[i]):
+                reg = re.compile(re.escape(l[0]), re.IGNORECASE)
+                temp = str(passwords[i])
+                for it in reg.finditer(passwords[i]):
+                    start_index = it.start()
+                    length = len(it.group())
+                    for index in range(start_index, start_index + length):
+                        format_password[index] = 'N'
+                    temp = reg.sub('$', str(temp))
                 PII_usage['name'] += 1
                 raw_password.append(passwords[i])
                 replace_PII.append(['Name', PII[2]])
-                passwords[i]=str(passwords[i]).replace(l[0], '&')
+                passwords[i]=temp
+            if len(l)>1:
+                if l[1] in str(passwords[i]):
+                    reg = re.compile(re.escape(l[1]), re.IGNORECASE)
+                    temp = str(passwords[i])
+                    for it in reg.finditer(passwords[i]):
+                        start_index = it.start()
+                        length = len(it.group())
+                        for index in range(start_index, start_index + length):
+                            format_password[index] = 'N'
+                        temp = reg.sub('$', str(temp))
+                    PII_usage['name']+=1
+                    raw_password.append(passwords[i])
+                    replace_PII.append(['Name', PII[2]])
+                    passwords[i]=temp
+
 
         #Email
         email=str(PII[1]).split('@')
@@ -119,13 +163,29 @@ if __name__=="__main__":
         # print(email_indice,PII[1])
         for indice in email_indice:
             if indice in str(passwords[i]):
+                reg = re.compile(re.escape(indice), re.IGNORECASE)
+                temp = str(passwords[i])
+                for it in reg.finditer(passwords[i]):
+                    start_index = it.start()
+                    length = len(it.group())
+                    for index in range(start_index, start_index + length):
+                        format_password[index] = 'E'
+                    temp = reg.sub('$', str(temp))
                 PII_usage['email']+=1
                 raw_password.append(passwords[i])
                 replace_PII.append(['Email', PII[1]])
-                passwords[i]=str(passwords[i]).replace(indice, '&')
-
+                passwords[i]=temp
+        # print(PIIs[i],passwords[i],format_password)
+        for index in range(len(format_password)):
+            if format_password[index] == 0:
+                format_password[index]=getType(origin_passwords[i][index])
+        format_passwords.append(format_password)
+        # print(format_password)
+    pcfg_format_passwords=Trans2PCFG(format_passwords)
+    print(pcfg_format_passwords)
     totalMatch = sum([PII_usage[key] for key in PII_usage])
     print(PII_usage)
     print("Total Match: %d    MatchRate: %.2f%%"%(totalMatch,totalMatch/size*100))
     # write_file(output,PIIs,passwords)
-    write_file(replaceFileName,replace_PII,raw_password)
+    write_file(pcfg_password_file,PIIs,pcfg_format_passwords)
+    # write_file(replaceFileName,replace_PII,raw_password)
