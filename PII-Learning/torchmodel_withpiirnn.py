@@ -75,6 +75,7 @@ class PII_LSTM(nn.Module):
         # what does repeatVector mean??
         # and how to use it in torch??
         output = nn.cat([out1,input2],dim=1)
+        # concatenate the output and the input
         output = F.dropout(output, 0.1)
         output = self.rnn2(output,hidden2)
         output = self.dropout(output)
@@ -84,7 +85,7 @@ class PII_LSTM(nn.Module):
         return output.view(1, -1), hidden3
 class Model:
     def __init__(self,epoches=10):
-        self.model=PII_LSTM(len(__),512,len(__))  #input and output not yet decided
+        self.model=PII_LSTM(len(__),256,512,len(__))  #input and output not yet decided
         self.model.to(device)
     def save(self):
         torch.save(self.model.state_dict(),".\\")
@@ -108,11 +109,11 @@ class Model:
                 loss = 0
                 tr = random.choice(train_set)
                 optimizer.zero_grad()
-                hidden = torch.zeros(1, 1, 512, device=device)
                 for sel in tr:#you are suppose to divide the train data and the target
                     pw_tensor = torch.tensor(__, dtype=torch.float, device=device)
+                    pii_tensor = torch.tensor(__, dtype=torch.float, device=device)
                     target_tensor = torch.tensor(__, dtype=torch.long, device=device)#replace it!
-                    pred, hidden = self.model(pw_tensor, hidden)
+                    pred, hidden = self.model(pw_tensor, pii_tensor)
                     loss += lossfunc(pred, target_tensor)
 
                 loss.backward()
